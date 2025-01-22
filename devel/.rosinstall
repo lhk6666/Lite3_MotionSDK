@@ -1,0 +1,2 @@
+- setup-file:
+    local-name: /home/dragon_llm/ros/Lite3_ROS/src/Lite3_MotionSDK/devel/setup.sh

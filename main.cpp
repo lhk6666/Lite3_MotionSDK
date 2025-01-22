@@ -36,7 +36,7 @@ int main(int argc, char* argv[]){
   RobotCmd robot_joint_cmd;
   memset(&robot_joint_cmd, 0, sizeof(robot_joint_cmd));
 
-  Sender* send_cmd          = new Sender("192.168.1.120",43893);              ///< Create send thread
+  Sender* send_cmd          = new Sender("192.168.2.1",43893);              ///< Create send thread
   Receiver* robot_data_recv = new Receiver();                                 ///< Create a receive resolution
   robot_data_recv->RegisterCallBack(OnMessageUpdate);
   MotionExample robot_set_up_demo;                                            ///< Demos for testing can be deleted by yourself
@@ -65,14 +65,14 @@ int main(int argc, char* argv[]){
     if(time_tick >= 1000 ){
       robot_set_up_demo.StandUp(robot_joint_cmd,now_time,*robot_data);        ///< Full stand up
     }
-    if(time_tick >= 10000){
-      send_cmd->ControlGet(ROBOT);                                            ///< Return the control right, input: ROBOT: Original algorithm control of the robot .  SDK: SDK control PS: over 50ms, no data set sent_ Send (cmd), you will lose control, you need to resend to obtain control
-      break;
-    }
+    // if(time_tick >= 10000){
+    //   send_cmd->ControlGet(ROBOT);                                            ///< Return the control right, input: ROBOT: Original algorithm control of the robot .  SDK: SDK control PS: over 50ms, no data set sent_ Send (cmd), you will lose control, you need to resend to obtain control
+    //   break;
+    // }
     if(is_message_updated_){
-      // send_cmd->SendCmd(robot_joint_cmd);  
+      send_cmd->SendCmd(robot_joint_cmd);  
     }               
-    //cout << robot_data->imu.acc_x << endl;
+    cout << robot_data->imu.acc_x << endl;
   }
   return 0;
 } 
